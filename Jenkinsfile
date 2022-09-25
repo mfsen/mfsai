@@ -9,7 +9,7 @@ pipeline {
 
     stage('updateDir') {
       steps {
-        sh 'cp  /var/jenkins_home/workspace/mfsai_main/* /var/personalWeb'
+        sh 'cp -r /var/jenkins_home/workspace/mfsai_main/* /var/personalWeb'
       }
     }
 
