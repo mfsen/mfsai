@@ -9,7 +9,7 @@ pipeline {
 
     stage('updateDir') {
       steps {
-        sh 'pwd'
+        sh 'sudo cp  /var/jenkins_home/workspace/mfsai_main/* /home/opc/personalWeb'
       }
     }
 
