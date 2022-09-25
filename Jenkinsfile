@@ -7,5 +7,11 @@ pipeline {
       }
     }
 
+    stage('updateDir') {
+      steps {
+        sh 'ls -la'
+      }
+    }
+
   }
 }
