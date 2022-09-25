@@ -9,7 +9,7 @@ pipeline {
 
     stage('updateDir') {
       steps {
-        sh 'ls -la'
+        sh 'pwd'
       }
     }
 
