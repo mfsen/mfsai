@@ -9,133 +9,334 @@
   <meta name="google" content="notranslate">
   <meta name="author" content="Mashup templates have been developed by Orson.io team">
 
-  <!-- Disable tap highlight on IE -->
+  <!-- Disable tap highlight oan IE -->
   <meta name="msapplication-tap-highlight" content="no">
 
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
   <link rel="icon" href="./assets/favicon.ico">
 
-  <title>Projects</title>
+  <title>Projects - Mustafa Fatih ŞEN</title>
   <link href="./main.3da94fde.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    :root {
+      --dark-bg: #0a192f;
+      --nav-bg: #112240;
+      --text-primary: #ccd6f6;
+      --text-secondary: #8892b0;
+      --accent: #64ffda;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Sidebar Styles - Same as other pages */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 250px;
+      background-color: var(--nav-bg);
+      padding: 2rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      z-index: 100;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 2rem;
+      display: block;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      color: var(--text-primary);
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin-top: 3rem;
+    }
+
+    .nav-links li {
+      margin: 1rem 0;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links i {
+      margin-right: 1rem;
+      width: 20px;
+    }
+
+    /* Projects Container */
+    .projects-container {
+      margin-left: 250px;
+      padding: 3rem;
+    }
+
+    .section-title {
+      color: var(--accent);
+      font-size: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--nav-bg);
+      border-radius: 12px;
+      padding: 0 0 1.5rem;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(100, 255, 218, 0.1);
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .project-card h3,
+    .project-card p,
+    .project-card .tech-stack {
+      padding: 0 1.5rem;
+    }
+
+    .project-card h3 {
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .project-card p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1.3rem;
+      line-height: 1.8;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tech-tag {
+      background: rgba(100, 255, 218, 0.1);
+      color: var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      font-size: 1.1rem;
+    }
+
+    .project-image {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+        padding: 1rem;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+      }
+
+      .nav-links span {
+        display: none;
+      }
+
+      .projects-container {
+        margin-left: 60px;
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .project-card h3 {
+        font-size: 1.5rem;
+      }
+
+      .project-card p {
+        font-size: 1.2rem;
+      }
+
+      .tech-tag {
+        font-size: 1rem;
+      }
+
+      .profile-name {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <img src="./assets/images/profile/profileImg.jpg" alt="Mustafa Fatih ŞEN" class="profile-pic">
+    <p class="profile-name">Mustafa Fatih ŞEN</p>
+    <ul class="nav-links">
+      <li><a href="./index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+      <li><a href="./about.html"><i class="fas fa-user"></i><span>About</span></a></li>
+      <li><a href="./project.html" class="active"><i class="fas fa-code"></i><span>Projects</span></a></li>
+      <li><a href="./contact.html"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+    </ul>
+  </nav>
 
-  <header>
-    <nav class="navbar navbar-fixed-top navbar-default">
-      <div class="container">
-        <button type="button" class="navbar-toggle">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        
-        <nav class="navbar-fullscreen" id="navbar-middle">
-          <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <ul class="navbar-fullscreen-links">
-            <li><a href="./index.html" title="">Home</a></li>
-            <li><a href="./project.html" title="">Projects</a></li>
-            <li><a href="./about.html" title="">About me</a></li>
-            <!-- Add more navigation links as needed -->
-          </ul>
-  
-          <div class="footer-container">
-            <p><small>Mustafa Fatih ŞEN <a href="http://www.mashup-template.com/"  title="Create website with free html template"> </a></small></p>
-            <p class="footer-share-icons">
-              <a href="https://www.linkedin.com/in/mustafa-fatih-%C5%9Fen-b7495b84/" class="fa-icon" title="">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="https://www.instagram.com/mustafafatihsen/" class="fa-icon" title="">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="https://www.youtube.com/channel/UCK_g4Pa0Ui6PW0TOyRl1j0A" class="fa-icon" title="">
-                <i class="fa fa-youtube" aria-hidden="true"></i>
-              </a>
-            </p>
-          </div>
-        </nav> 
-      </div>
-    </nav>
-  </header>
-
-  <div class="hero-full-container background-image-container white-text-container" style="background-image:url('./assets/images/python.jpg')">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="hero-full-wrapper">
-            <div class="text-content text-center">
-             
-            </div>
-          </div>
+  <!-- Projects Section -->
+  <main class="projects-container">
+    <h1 class="section-title">Featured Projects</h1>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-image">
+          <img src="./assets/images/projects/road-authority/point-cloud.jpg" alt="Point Cloud Visualization">
+        </div>
+        <h3>Turkish Road Authority Assets Management System</h3>
+        <p>Led the development of a comprehensive system managing 20TB of point cloud data across 100,000 km of Turkish roads. Implemented data collection, processing, and integration of mobile mapping systems.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">TensorFlow</span>
+          <span class="tech-tag">GIS</span>
+          <span class="tech-tag">Point Cloud</span>
         </div>
       </div>
-    </div>
-  </div>
-  
 
-  <section class="section-container">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="text-center section-container-spacer">
-            <h2 class="with-project-number"><span class="project-number">01</span>Projects</h2>
-          </div>
-          <div class="row section-container-spacer">
-            <div class="col-md-4">
-              <div class="section-container-spacer">
-                <h3>Python Projects</h3>
-                <p>* Georeferencing applications</p>
-                <p>* Object detection and tracking</p>
-                <p>* Mobile mapping tools</p>
-                <p>* Image processing tools</p>
-                <p>* 3D simulation with Unity</p>
-                <p>* Data analysis and cleaning</p>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <h3>Georeferencing Applications</h3>
-              <p>Explore my projects involving georeferencing applications for Velodyne LiDAR data using C++. These projects focus on enhancing accuracy and precision in spatial data.</p>
-              <img src="./assets/images/georeferencing.jpg" alt="Georeferenced point cloud" class="img-responsive">
-              
-              <h3>Object Detection and Tracking</h3>
-              <p>Dive into my Python-based projects in object detection and tracking using TensorFlow. I've worked on projects like face plate blurring, vehicle detection and tracking, and smart junction tracing.</p>
-              <img src="./assets/images/object_detection.jpg" alt="Object detection example" class="img-responsive">
-              
-              <!-- Add descriptions and images for other project topics here -->
-            </div>
-          </div>
+      <div class="project-card">
+        <div class="project-image">
+          <img src="./assets/images/projects/traffic-management/vehicle-detection.jpg" alt="Traffic Management System">
+        </div>
+        <h3>Smart Traffic Management System</h3>
+        <p>Developed an AI-powered traffic management system for automatic vehicle counting and traffic light optimization. Built backend using Python Flask for multi-video processing.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">TensorFlow</span>
+          <span class="tech-tag">Flask</span>
+          <span class="tech-tag">Computer Vision</span>
         </div>
       </div>
-    </div>
-  </section>
-  
 
-<div class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 text-center">
-        <ul class="navbar-nav nav">
-          <!-- Previous project navigation link -->
-        </ul>
-        <p class="h5 navbar-text">Python Projects <i class="fa fa-chevron-down arrow-down" aria-hidden="true"></i></p>
-        <ul class="navbar-nav nav navbar-right">
-          <!-- Next project navigation link -->
-        </ul>
+      <div class="project-card">
+        <div class="project-image">
+          <img src="./assets/images/projects/pavement/defect-detection.jpg" alt="Road Defect Detection">
+        </div>
+        <h3>Road Pavement Analysis System</h3>
+        <p>Created an advanced detection system for identifying and localizing road defects using deep learning models and computer vision techniques.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">TensorFlow</span>
+          <span class="tech-tag">OpenCV</span>
+          <span class="tech-tag">Image Processing</span>
+        </div>
       </div>
+
+      <div class="project-card">
+        <div class="project-image">
+          <img src="./assets/images/projects/sumo/simulation.jpg" alt="SUMO Traffic Simulation">
+        </div>
+        <h3>Urban Mobility Analysis (SUMO)</h3>
+        <p>Developed the Turkish adaptation of the Eclipse SUMO project, including 3D simulation environments and user-friendly reporting applications.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Unity</span>
+          <span class="tech-tag">C#</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">3D Modeling</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">
+          <img src="./assets/images/projects/panoramic/camera-setup.jpg" alt="Panoramic Camera System">
+        </div>
+        <h3>Panoramic Camera System</h3>
+        <p>Designed and implemented a custom panoramic camera system for road asset management, including data collection and processing pipelines.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">C++</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Image Processing</span>
+          <span class="tech-tag">Hardware Integration</span>
+        </div>
+      </div>
+
     </div>
-  </div>
-</div>
+  </main>
 
-<!-- Your footer code here -->
+  <footer class="container">
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/mustafa-fatih-%C5%9Fen-b7495b84/" title="LinkedIn">
+        <i class="fa fa-linkedin" aria-hidden="true"></i>
+      </a>
+      <a href="https://www.instagram.com/__mustafafatihsen__/" title="Instagram">
+        <i class="fa fa-instagram" aria-hidden="true"></i>
+      </a>
+      <a href="https://www.youtube.com/channel/UCK_g4Pa0Ui6PW0TOyRl1j0A" title="YouTube">
+        <i class="fa fa-youtube" aria-hidden="true"></i>
+      </a>
+    </div>
+  </footer>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-    // Initialize any scripts here
-  });
-</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+      // Initialize any scripts here
+    });
+  </script>
 
-<script type="text/javascript" src="./main.4c6e144e.js"></script>
+  <script type="text/javascript" src="./main.4c6e144e.js"></script>
 </body>
 
 </html>

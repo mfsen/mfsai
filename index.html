@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta charset="UTF-8">
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
   <meta content="width=device-width,initial-scale=1" name="viewport">
   <meta content="description" name="description">
@@ -15,96 +15,264 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
   <link href="./assets/favicon.ico" rel="icon">
   
-  <title>Personal Webpage</title>  
+  <title>Mustafa Fatih ŞEN - Home</title>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8249591393594541"
   crossorigin="anonymous"></script>
 
-<link href="./main.3da94fde.css" rel="stylesheet"></head>
+<link href="./main.3da94fde.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    :root {
+        --dark-bg: #0a192f;
+        --nav-bg: #112240;
+        --text-primary: #ccd6f6;
+        --text-secondary: #8892b0;
+        --accent: #64ffda;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        color: var(--text-primary);
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+    }
+
+    /* Sidebar Styles - Same as about.html */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 250px;
+        background-color: var(--nav-bg);
+        padding: 2rem;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        z-index: 100;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 2rem;
+        display: block;
+        object-fit: cover;
+    }
+
+    .nav-links {
+        list-style: none;
+        margin-top: 3rem;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+    }
+
+    .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--accent);
+    }
+
+    .nav-links i {
+        margin-right: 1rem;
+        width: 20px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        margin-left: 250px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 0 4rem;
+        position: relative;
+        background-color: var(--dark-bg);  /* Fallback color */
+        background-image: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), 
+                         url('./assets/images/hero/homeImg.jpg');  /* Simplified path */
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Add loading state styles */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--dark-bg);
+        z-index: -1;
+    }
+
+    .hero-content {
+        max-width: 800px;
+    }
+
+    .greeting {
+        color: var(--accent);
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .hero-content h1 {
+        font-size: 5rem;
+        font-weight: 700;
+        margin: 0.5rem 0;
+        color: var(--text-primary);
+    }
+
+    .hero-content h2 {
+        font-size: 3rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1.4rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        max-width: 600px;
+        line-height: 1.8;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1.2rem 2.5rem;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: rgba(100, 255, 218, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .cta-button.secondary {
+        border-color: var(--text-secondary);
+        color: var(--text-secondary);
+    }
+
+    .cta-button.secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 60px;
+            padding: 1rem;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links span {
+            display: none;
+        }
+
+        .hero-section {
+            margin-left: 60px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+        }
+
+        .hero-content h2 {
+            font-size: 2.2rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+        }
+
+        .cta-button {
+            text-align: center;
+        }
+    }
+
+    .profile-name {
+        color: var(--text-primary);
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .profile-name {
+            display: none;
+        }
+    }
+</style>
+</head>
 
 <body>
-
- <!-- Add your content of header -->
-
-<header>
-  <nav class="navbar navbar-fixed-top navbar-default">
-    <div class="container">
-        <button type="button" class="navbar-toggle">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        
-      <nav class="navbar-fullscreen" id="navbar-middle">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <ul class="navbar-fullscreen-links">
-          <li><a href="./index.html" title="">Home</a></li>
-          <li><a href="./project.html" title="">Project</a></li>
-          <li><a href="./about.html" title="">About me</a></li>
-         
-          <!-- <li><a href="./components.html" title="">Components</a></li> -->
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <img src="./assets/images/profile/profileImg.jpg" alt="Mustafa Fatih ŞEN" class="profile-pic">
+        <p class="profile-name">Mustafa Fatih ŞEN</p>
+        <ul class="nav-links">
+            <li><a href="./index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="./about.html"><i class="fas fa-user"></i><span>About</span></a></li>
+            <li><a href="./project.html"><i class="fas fa-code"></i><span>Projects</span></a></li>
+            <li><a href="./contact.html"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
         </ul>
+    </nav>
 
-        <div class="footer-container">
-           
-          <p><small>Mustafa Fatih ŞEN <a href="http://www.mashup-template.com/"  title="Create website with free html template"> </a></small></p>
-          <p class="footer-share-icons">
-              <a href="https://www.linkedin.com/in/mustafa-fatih-%C5%9Fen-b7495b84/" class="fa-icon" title="">
-                  <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              
-              <a href="https://www.instagram.com/mustafafatihsen/" class="fa-icon" title="">
-                  <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="https://www.youtube.com/channel/UCK_g4Pa0Ui6PW0TOyRl1j0A" class="fa-icon" title="">
-                <i class="fa fa-youtube" aria-hidden="true"></i>
-            </a>
-          </p>
-                       
-        </div>
-
-
-      </nav> 
-    
-    </div>
-  </nav>
-</header>
-
-  
-<div class="hero-full-container background-image-container white-text-container" style="background-image:url('./assets/images/homeImg.jpg')">
-  <div class="overlay-gradient"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-7 col-md-offset-1">
-        <div class="hero-full-wrapper">
-          <div class="text-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <span class="greeting">Hi, my name is</span>
             <h1>Mustafa Fatih ŞEN</h1>
-            
-            <p>An engineer that lives in Istanbul. I like programming and doing stuff with electronic devices.
-              This is my first attempt to form a web page for me.  </p>
-          </div>
+            <h2>Building Advanced Software Solutions</h2>
+            <p>
+                Software Developer with 5+ years of expertise in Python and C++. 
+                Specializing in computer vision, deep learning, and geospatial technologies. 
+                Currently developing sophisticated mapping systems and AI solutions at ANKA Geographic Information Technologies.
+            </p>
+            <div class="hero-buttons">
+                <a href="./project.html" class="cta-button">View Projects</a>
+                <a href="./about.html" class="cta-button secondary">About Me</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-    navbarFixedTopAnimation();
-    closeMenuBeforeGoingToPage();
-  });
-</script>
-
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-      navbarToggleSidebar();
-      closeMenuBeforeGoingToPage();
-      navActivePage();
-    });
-</script>
- <script type="text/javascript" src="./main.4c6e144e.js"></script></body>
+    <script type="text/javascript" src="./main.4c6e144e.js"></script>
+</body>
 
 </html>
