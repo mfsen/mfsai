@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+  <meta content="Tools Collection" name="author">
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
+  <link href="./assets/favicon.ico" rel="icon">
+  
+  <title>Tools - Mustafa Fatih ŞEN</title>
+
+  <link href="./main.3da94fde.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Add CryptoJS library to enable hash functionality -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  
+<style>
+    :root {
+        --dark-bg: #0a192f;
+        --nav-bg: #112240;
+        --text-primary: #ccd6f6;
+        --text-secondary: #8892b0;
+        --accent: #64ffda;
+        --accent-transparent: rgba(100, 255, 218, 0.1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        color: var(--text-primary);
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 250px;
+        background-color: var(--nav-bg);
+        padding: 2rem;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        z-index: 100;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 2rem;
+        display: block;
+        object-fit: cover;
+    }
+
+    .nav-links {
+        list-style: none;
+        margin-top: 3rem;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+    }
+
+    .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--accent);
+    }
+
+    .nav-links i {
+        margin-right: 1rem;
+        width: 20px;
+    }
+
+    /* Main Content */
+    .main-content {
+        margin-left: 250px;
+        padding: 3rem;
+    }
+
+    .section-title {
+        color: var(--accent);
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--accent);
+    }
+
+    .section-description {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        margin-bottom: 3rem;
+        max-width: 800px;
+        line-height: 1.8;
+    }
+
+    /* Tab Navigation */
+    .tabs-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+        margin-top: 2rem;
+    }
+
+    .tab-navigation {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-bottom: 1rem;
+        background-color: var(--nav-bg);
+        border-radius: 12px 12px 0 0;
+        position: relative;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent) var(--nav-bg);
+    }
+
+    .tab-navigation::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .tab-navigation::-webkit-scrollbar-track {
+        background: var(--nav-bg);
+    }
+
+    .tab-navigation::-webkit-scrollbar-thumb {
+        background-color: var(--accent);
+        border-radius: 2px;
+    }
+
+    .tab-btn {
+        background: transparent;
+        color: var(--text-secondary);
+        border: none;
+        padding: 1.2rem 2rem;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+        position: relative;
+        outline: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .tab-btn i {
+        font-size: 1.2rem;
+        color: var(--accent);
+    }
+
+    .tab-btn.active {
+        color: var(--accent);
+        background-color: var(--dark-bg);
+    }
+
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--accent);
+    }
+
+    .tab-btn:hover:not(.active) {
+        color: var(--accent);
+        background-color: rgba(17, 34, 64, 0.8);
+    }
+
+    /* Tab Content */
+    .tab-content {
+        background-color: var(--dark-bg);
+        border-radius: 0 0 12px 12px;
+        border: 1px solid var(--nav-bg);
+        padding: 2rem;
+        min-height: 300px;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tool-header {
+        color: var(--accent);
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .tool-description {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        line-height: 1.8;
+    }
+
+    .tool-panel {
+        background-color: var(--nav-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .tool-input {
+        margin-bottom: 1.5rem;
+    }
+
+    .tool-input label {
+        display: block;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .tool-input input, 
+    .tool-input textarea {
+        width: 100%;
+        padding: 1rem;
+        background-color: var(--dark-bg);
+        border: 1px solid rgba(100, 255, 218, 0.2);
+        border-radius: 6px;
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .tool-input textarea {
+        min-height: 150px;
+        resize: vertical;
+        font-family: monospace;
+    }
+
+    .tool-input input:focus,
+    .tool-input textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--accent-transparent);
+    }
+
+    .tool-input input[type="color"] {
+        height: 50px;
+        padding: 0.25rem;
+        cursor: pointer;
+    }
+
+    .controls-row {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .tool-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        background-color: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .tool-btn:hover {
+        background-color: var(--accent-transparent);
+        transform: translateY(-2px);
+    }
+
+    .tool-btn i {
+        font-size: 1rem;
+    }
+
+    .tool-output {
+        background-color: var(--dark-bg);
+        border-radius: 6px;
+        padding: 1.5rem;
+        color: var(--accent);
+        font-family: monospace;
+        min-height: 80px;
+        max-height: 400px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        border: 1px solid rgba(100, 255, 218, 0.2);
+    }
+
+    .color-preview {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .color-box {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        border: 1px solid var(--text-secondary);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .color-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .color-format {
+        display: block;
+        font-family: monospace;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+    }
+
+    /* Add a dark mode toggle button */
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+        color: var(--accent);
+        transform: rotate(30deg);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 60px;
+            padding: 1rem;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links span {
+            display: none;
+        }
+
+        .main-content {
+            margin-left: 60px;
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.2rem;
+        }
+
+        .tool-header {
+            font-size: 1.8rem;
+        }
+
+        .tool-panel {
+            padding: 1.5rem;
+        }
+
+        .controls-row {
+            flex-direction: column;
+        }
+
+        .tool-btn {
+            width: 100%;
+        }
+
+        .profile-name {
+            display: none;
+        }
+    }
+
+    .profile-name {
+        color: var(--text-primary);
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+</style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <img src="./assets/images/profile/profileImg.jpg" alt="Mustafa Fatih ŞEN" class="profile-pic">
+        <p class="profile-name">Mustafa Fatih ŞEN</p>
+        <ul class="nav-links">
+            <li><a href="./index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="./about.html"><i class="fas fa-user"></i><span>About</span></a></li>
+            <li><a href="./project.html"><i class="fas fa-code"></i><span>Projects</span></a></li>
+            <li><a href="./games.html"><i class="fas fa-gamepad"></i><span>Games</span></a></li>
+            <li><a href="./tools.html" class="active"><i class="fas fa-tools"></i><span>Tools</span></a></li>
+            <li><a href="./contact.html"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="section-title">Developer Tools</h1>
+        <p class="section-description">A collection of interactive web tools designed to help with common development and design tasks. Select a tool from the tabs below and start using it right away.</p>
+        
+        <div class="tabs-container">
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="base64"><i class="fas fa-exchange-alt"></i> Base64 Converter</button>
+                <button class="tab-btn" data-tab="color"><i class="fas fa-palette"></i> Color Tools</button>
+                <button class="tab-btn" data-tab="json"><i class="fas fa-code"></i> JSON Formatter</button>
+                <button class="tab-btn" data-tab="url"><i class="fas fa-link"></i> URL Encoder</button>
+                <button class="tab-btn" data-tab="hash"><i class="fas fa-hashtag"></i> Hash Generator</button>
+                <button class="tab-btn" data-tab="lorem"><i class="fas fa-paragraph"></i> Lorem Ipsum</button>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Base64 Converter -->
+                <div class="tab-pane active" id="base64">
+                    <h2 class="tool-header"><i class="fas fa-exchange-alt"></i> Base64 Converter</h2>
+                    <p class="tool-description">Easily encode text to Base64 or decode Base64 back to plain text. This is useful for encoding data for transmission over systems that only support ASCII characters.</p>
+                    
+                    <div class="tool-panel">
+                        <div class="tool-input">
+                            <label for="base64Input">Input Text / Base64 String</label>
+                            <textarea id="base64Input" placeholder="Enter text to encode or Base64 to decode"></textarea>
+                        </div>
+                        
+                        <div class="controls-row">
+                            <button class="tool-btn" id="encodeBase64"><i class="fas fa-arrow-down"></i> Encode to Base64</button>
+                            <button class="tool-btn" id="decodeBase64"><i class="fas fa-arrow-up"></i> Decode from Base64</button>
+                            <button class="tool-btn" id="clearBase64"><i class="fas fa-trash"></i> Clear</button>
+                        </div>
+                        
+                        <div class="tool-output" id="base64Output">Result will appear here...</div>
+                    </div>
+                </div>
+                
+                <!-- Color Tools -->
+                <div class="tab-pane" id="color">
+                    <h2 class="tool-header"><i class="fas fa-palette"></i> Color Converter</h2>
+                    <p class="tool-description">Convert between different color formats (HEX, RGB, HSL) and visualize colors for your web design projects.</p>
+                    
+                    <div class="tool-panel">
+                        <div class="controls-row">
+                            <div class="tool-input" style="flex: 1;">
+                                <label for="colorPicker">Select Color</label>
+                                <input type="color" id="colorPicker" value="#64ffda">
+                            </div>
+                            <div class="tool-input" style="flex: 2;">
+                                <label for="hexInput">HEX Value</label>
+                                <input type="text" id="hexInput" placeholder="#HEX" value="#64ffda">
+                            </div>
+                        </div>
+                        
+                        <div class="color-preview">
+                            <div class="color-box" id="colorBox" style="background-color: #64ffda;"></div>
+                            <div class="color-info">
+                                <span class="color-format" id="rgbValue">RGB: 100, 255, 218</span>
+                                <span class="color-format" id="hslValue">HSL: 168°, 100%, 70%</span>
+                                <span class="color-format" id="rgbaCssValue">rgba(100, 255, 218, 1)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-input" style="margin-top: 1.5rem;">
+                            <label>Alpha Transparency</label>
+                            <input type="range" id="alphaSlider" min="0" max="1" step="0.01" value="1" style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- JSON Formatter -->
+                <div class="tab-pane" id="json">
+                    <h2 class="tool-header"><i class="fas fa-code"></i> JSON Formatter</h2>
+                    <p class="tool-description">Format and validate JSON data with proper indentation or minify it for reduced file size.</p>
+                    
+                    <div class="tool-panel">
+                        <div class="tool-input">
+                            <label for="jsonInput">JSON Input</label>
+                            <textarea id="jsonInput" placeholder='Enter JSON here... e.g. {"name":"John","age":30,"city":"New York"}'></textarea>
+                        </div>
+                        
+                        <div class="controls-row">
+                            <button class="tool-btn" id="formatJSON"><i class="fas fa-indent"></i> Format JSON</button>
+                            <button class="tool-btn" id="minifyJSON"><i class="fas fa-compress"></i> Minify JSON</button>
+                            <button class="tool-btn" id="clearJSON"><i class="fas fa-trash"></i> Clear</button>
+                        </div>
+                        
+                        <div class="tool-output" id="jsonOutput">Formatted JSON will appear here...</div>
+                    </div>
+                </div>
+                
+                <!-- URL Encoder/Decoder -->
+                <div class="tab-pane" id="url">
+                    <h2 class="tool-header"><i class="fas fa-link"></i> URL Encoder/Decoder</h2>
+                    <p class="tool-description">Encode or decode URLs to ensure they're properly formatted for web applications and APIs.</p>
+                    
+                    <div class="tool-panel">
+                        <div class="tool-input">
+                            <label for="urlInput">URL or Text to Encode/Decode</label>
+                            <input type="text" id="urlInput" placeholder="Enter URL to encode/decode">
+                        </div>
+                        
+                        <div class="controls-row">
+                            <button class="tool-btn" id="encodeURL"><i class="fas fa-lock"></i> Encode URL</button>
+                            <button class="tool-btn" id="decodeURL"><i class="fas fa-unlock"></i> Decode URL</button>
+                            <button class="tool-btn" id="clearURL"><i class="fas fa-trash"></i> Clear</button>
+                        </div>
+                        
+                        <div class="tool-output" id="urlOutput">Result will appear here...</div>
+                    </div>
+                </div>
+                
+                <!-- Hash Generator -->
+                <div class="tab-pane" id="hash">
+                    <h2 class="tool-header"><i class="fas fa-hashtag"></i> Hash Generator</h2>
+                    <p class="tool-description">Generate secure hash values (MD5, SHA-1, SHA-256) from text input for security purposes and verification.</p>
+                    
+                    <div class="tool-panel">
+                        <div class="tool-input">
+                            <label for="hashInput">Text to Hash</label>
+                            <input type="text" id="hashInput" placeholder="Enter text to hash">
+                        </div>
+                        
+                        <div class="controls-row">
+                            <button class="tool-btn" id="md5Hash"><i class="fas fa-fingerprint"></i> Generate MD5</button>
+                            <button class="tool-btn" id="sha1Hash"><i class="fas fa-fingerprint"></i> Generate SHA-1</button>
+                            <button class="tool-btn" id="sha256Hash"><i class="fas fa-fingerprint"></i> Generate SHA-256</button>
+                        </div>
+                        
+                        <div class="tool-output" id="hashOutput">Hash will appear here...</div>
+                    </div>
+                </div>
+                
+                <!-- Lorem Ipsum Generator -->
+                <div class="tab-pane" id="lorem">
+                    <h2 class="tool-header"><i class="fas fa-paragraph"></i> Lorem Ipsum Generator</h2>
+                    <p class="tool-description">Generate placeholder text for your design mockups, layouts, and wireframes.</p>
+                    
+                    <div class="tool-panel">
+                        <div class="controls-row">
+                            <div class="tool-input" style="flex: 1;">
+                                <label for="loremParagraphs">Number of Paragraphs</label>
+                                <input type="number" id="loremParagraphs" min="1" max="10" value="3">
+                            </div>
+                            
+                            <div class="tool-input" style="flex: 1;">
+                                <label for="loremLength">Length</label>
+                                <select id="loremLength">
+                                    <option value="short">Short</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="long">Long</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="controls-row">
+                            <button class="tool-btn" id="generateLorem"><i class="fas fa-magic"></i> Generate Text</button>
+                            <button class="tool-btn" id="copyLorem"><i class="fas fa-copy"></i> Copy to Clipboard</button>
+                        </div>
+                        
+                        <div class="tool-output" id="loremOutput" style="white-space: pre-wrap;">Lorem ipsum text will appear here...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Make sure all scripts are loaded
+        window.addEventListener('load', function() {
+            initializeTools();
+        });
+
+        // Main initialization function
+        function initializeTools() {
+            console.log('DOM fully loaded, initializing tools...');
+            
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            // Add click event listeners to tab buttons
+            tabButtons.forEach(button => {
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
+                    console.log('Tab clicked:', tabId);
+                    
+                    // Remove active class from all buttons and panes
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding pane
+                    this.classList.add('active');
+                    const tabPane = document.getElementById(tabId);
+                    
+                    if (tabPane) {
+                        tabPane.classList.add('active');
+                    } else {
+                        console.error('Tab pane not found for id:', tabId);
+                    }
+                };
+            });
+            
+            // Base64 Encoder/Decoder
+            document.getElementById('encodeBase64').onclick = function() {
+                const input = document.getElementById('base64Input').value;
+                try {
+                    const encoded = btoa(input);
+                    document.getElementById('base64Output').textContent = encoded;
+                } catch (e) {
+                    document.getElementById('base64Output').textContent = 'Error encoding: ' + e.message;
+                }
+            };
+            
+            document.getElementById('decodeBase64').onclick = function() {
+                const input = document.getElementById('base64Input').value;
+                try {
+                    const decoded = atob(input);
+                    document.getElementById('base64Output').textContent = decoded;
+                } catch (e) {
+                    document.getElementById('base64Output').textContent = 'Error decoding: ' + e.message;
+                }
+            };
+            
+            document.getElementById('clearBase64').onclick = function() {
+                document.getElementById('base64Input').value = '';
+                document.getElementById('base64Output').textContent = 'Result will appear here...';
+            };
+            
+            // Color Converter
+            function updateColorOutput() {
+                const hexColor = document.getElementById('hexInput').value;
+                const alpha = parseFloat(document.getElementById('alphaSlider').value);
+                document.getElementById('colorPicker').value = hexColor;
+                
+                // Convert hex to RGB
+                const r = parseInt(hexColor.substr(1, 2), 16);
+                const g = parseInt(hexColor.substr(3, 2), 16);
+                const b = parseInt(hexColor.substr(5, 2), 16);
+                
+                // Convert RGB to HSL
+                const r1 = r / 255;
+                const g1 = g / 255;
+                const b1 = b / 255;
+                
+                const max = Math.max(r1, g1, b1);
+                const min = Math.min(r1, g1, b1);
+                let h, s, l = (max + min) / 2;
+                
+                if (max === min) {
+                    h = s = 0; // achromatic
+                } else {
+                    const d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                        case r1: h = (g1 - b1) / d + (g1 < b1 ? 6 : 0); break;
+                        case g1: h = (b1 - r1) / d + 2; break;
+                        case b1: h = (r1 - g1) / d + 4; break;
+                    }
+                    h /= 6;
+                }
+                
+                const hsl = {
+                    h: Math.round(h * 360),
+                    s: Math.round(s * 100),
+                    l: Math.round(l * 100)
+                };
+                
+                document.getElementById('rgbValue').textContent = `RGB: ${r}, ${g}, ${b}`;
+                document.getElementById('hslValue').textContent = `HSL: ${hsl.h}°, ${hsl.s}%, ${hsl.l}%`;
+                document.getElementById('rgbaCssValue').textContent = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                document.getElementById('colorBox').style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            
+            document.getElementById('colorPicker').oninput = function() {
+                document.getElementById('hexInput').value = this.value;
+                updateColorOutput();
+            };
+            
+            document.getElementById('hexInput').oninput = function() {
+                if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                    updateColorOutput();
+                }
+            };
+            
+            document.getElementById('alphaSlider').oninput = updateColorOutput;
+            
+            // JSON Formatter
+            document.getElementById('formatJSON').onclick = function() {
+                const input = document.getElementById('jsonInput').value.trim();
+                if (!input) {
+                    document.getElementById('jsonOutput').textContent = 'Please enter some JSON to format';
+                    return;
+                }
+                
+                try {
+                    const obj = JSON.parse(input);
+                    document.getElementById('jsonOutput').textContent = JSON.stringify(obj, null, 2);
+                } catch (e) {
+                    document.getElementById('jsonOutput').textContent = 'Invalid JSON: ' + e.message;
+                }
+            };
+            
+            document.getElementById('minifyJSON').onclick = function() {
+                const input = document.getElementById('jsonInput').value.trim();
+                if (!input) {
+                    document.getElementById('jsonOutput').textContent = 'Please enter some JSON to minify';
+                    return;
+                }
+                
+                try {
+                    const obj = JSON.parse(input);
+                    document.getElementById('jsonOutput').textContent = JSON.stringify(obj);
+                } catch (e) {
+                    document.getElementById('jsonOutput').textContent = 'Invalid JSON: ' + e.message;
+                }
+            };
+            
+            document.getElementById('clearJSON').onclick = function() {
+                document.getElementById('jsonInput').value = '';
+                document.getElementById('jsonOutput').textContent = 'Formatted JSON will appear here...';
+            };
+            
+            // URL Encoder/Decoder
+            document.getElementById('encodeURL').onclick = function() {
+                const input = document.getElementById('urlInput').value;
+                if (!input) {
+                    document.getElementById('urlOutput').textContent = 'Please enter text to encode';
+                    return;
+                }
+                document.getElementById('urlOutput').textContent = encodeURIComponent(input);
+            };
+            
+            document.getElementById('decodeURL').onclick = function() {
+                const input = document.getElementById('urlInput').value;
+                if (!input) {
+                    document.getElementById('urlOutput').textContent = 'Please enter text to decode';
+                    return;
+                }
+                try {
+                    document.getElementById('urlOutput').textContent = decodeURIComponent(input);
+                } catch (e) {
+                    document.getElementById('urlOutput').textContent = 'Error decoding: ' + e.message;
+                }
+            };
+            
+            document.getElementById('clearURL').onclick = function() {
+                document.getElementById('urlInput').value = '';
+                document.getElementById('urlOutput').textContent = 'Result will appear here...';
+            };
+            
+            // Hash Generator
+            if (typeof CryptoJS !== 'undefined') {
+                document.getElementById('md5Hash').onclick = function() {
+                    const input = document.getElementById('hashInput').value;
+                    if (!input) {
+                        document.getElementById('hashOutput').textContent = 'Please enter text to hash';
+                        return;
+                    }
+                    const hash = CryptoJS.MD5(input).toString();
+                    document.getElementById('hashOutput').textContent = hash;
+                };
+                
+                document.getElementById('sha1Hash').onclick = function() {
+                    const input = document.getElementById('hashInput').value;
+                    if (!input) {
+                        document.getElementById('hashOutput').textContent = 'Please enter text to hash';
+                        return;
+                    }
+                    const hash = CryptoJS.SHA1(input).toString();
+                    document.getElementById('hashOutput').textContent = hash;
+                };
+                
+                document.getElementById('sha256Hash').onclick = function() {
+                    const input = document.getElementById('hashInput').value;
+                    if (!input) {
+                        document.getElementById('hashOutput').textContent = 'Please enter text to hash';
+                        return;
+                    }
+                    const hash = CryptoJS.SHA256(input).toString();
+                    document.getElementById('hashOutput').textContent = hash;
+                };
+            } else {
+                const hashButtons = ['md5Hash', 'sha1Hash', 'sha256Hash'];
+                hashButtons.forEach(btnId => {
+                    document.getElementById(btnId).onclick = function() {
+                        document.getElementById('hashOutput').textContent = 
+                            'CryptoJS library not loaded correctly. Please refresh the page.';
+                    };
+                });
+            }
+            
+            // Lorem Ipsum Generator
+            const shortLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.";
+            const mediumLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+            const longLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            
+            document.getElementById('generateLorem').onclick = function() {
+                const paragraphs = parseInt(document.getElementById('loremParagraphs').value) || 1;
+                const length = document.getElementById('loremLength').value;
+                let template;
+                
+                switch(length) {
+                    case 'short':
+                        template = shortLorem;
+                        break;
+                    case 'long':
+                        template = longLorem;
+                        break;
+                    default:
+                        template = mediumLorem;
+                }
+                
+                let result = '';
+                for (let i = 0; i < paragraphs; i++) {
+                    result += template + '\n\n';
+                }
+                
+                document.getElementById('loremOutput').textContent = result.trim();
+            };
+            
+            document.getElementById('copyLorem').onclick = function() {
+                const output = document.getElementById('loremOutput');
+                const text = output.textContent;
+                
+                try {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            this.innerHTML = '<i class="fas fa-copy"></i> Copy to Clipboard';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                        fallbackCopyText(text, this);
+                    });
+                } catch (e) {
+                    console.error('Clipboard API not supported:', e);
+                    fallbackCopyText(text, this);
+                }
+            };
+            
+            // Fallback method for copying text
+            function fallbackCopyText(text, button) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';  // Prevent scrolling to bottom
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                
+                try {
+                    const successful = document.execCommand('copy');
+                    const msg = successful ? 'Copied!' : 'Failed to copy';
+                    button.innerHTML = `<i class="fas fa-${successful ? 'check' : 'times'}"></i> ${msg}`;
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-copy"></i> Copy to Clipboard';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Error copying text:', err);
+                    button.innerHTML = '<i class="fas fa-times"></i> Copy Failed';
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-copy"></i> Copy to Clipboard';
+                    }, 2000);
+                }
+                
+                document.body.removeChild(textarea);
+            }
+            
+            // Initialize color output
+            updateColorOutput();
+            
+            console.log('Tools initialization complete');
+        }
+    </script>
+
+    <!-- Make sure this is the last script to load -->
+    <script type="text/javascript" src="./main.4c6e144e.js"></script>
+</body>
+
+</html>
